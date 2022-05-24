@@ -44,8 +44,8 @@ fun SimpleInputField(
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Done,
     textLenght: Int = 10,
-
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    onClick:() -> Unit
 
 
 ) {
@@ -58,7 +58,7 @@ fun SimpleInputField(
             singleLine = isSingleLine,
             textStyle = TextStyle(fontSize = 18.sp, color = MaterialTheme.colors.onBackground),
             modifier = modifier
-                .fillMaxWidth(),
+                .fillMaxWidth().clickable { if (!enabled)onClick.invoke() },
             maxLines = maxLine,
             enabled = enabled,
             keyboardOptions = KeyboardOptions(

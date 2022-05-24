@@ -19,6 +19,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import components.*
 import theme.SimpleTheme
+import javax.swing.JFileChooser
+import javax.swing.filechooser.FileNameExtensionFilter
 
 @Composable
 @Preview
@@ -63,6 +65,12 @@ fun MainScreen() {
             mutableStateOf(false)
         }
 
+        val fc = JFileChooser()
+        val filter = FileNameExtensionFilter("Imagenes", "jpg", "png", "gif", "bmp", "jpeg")
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY)
+        fc.isAcceptAllFileFilterUsed = false
+        fc.addChoosableFileFilter(filter)
+
 
         LazyRow(modifier = Modifier.fillMaxWidth()) {
             items(imagenesListTest()) {
@@ -72,9 +80,26 @@ fun MainScreen() {
             }
         }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
-            SimpleInputField(valueState = prefijo, labelId = "Prefijo", modifier = Modifier.width(200.dp))
-            SimpleInputField(valueState = originPath, labelId = "Path to convert", modifier = Modifier.width(200.dp))
-            SimpleInputField(valueState = convertPath, labelId = "Destiny Path", modifier = Modifier.width(200.dp))
+            SimpleInputField(valueState = prefijo, labelId = "Prefijo", modifier = Modifier.width(200.dp), onClick = {})
+            SimpleInputField(valueState = originPath, labelId = "Path to convert", modifier = Modifier.width(200.dp), enabled = false, onClick = {
+
+                val returnVal = fc.showOpenDialog(null)
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    val path = fc.selectedFile.path
+                    originPath.value = path
+                }
+
+
+            })
+            SimpleInputField(valueState = convertPath, labelId = "Destiny Path", modifier = Modifier.width(200.dp), enabled = false, onClick = {
+
+                val returnVal = fc.showOpenDialog(null)
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    val path = fc.selectedFile.path
+                    convertPath.value = path
+                }
+
+            })
         }
 
         Row(modifier = Modifier.fillMaxWidth().padding(top = 24.dp), horizontalArrangement = Arrangement.SpaceBetween) {
@@ -94,9 +119,7 @@ fun MainScreen() {
 
                 LazyVerticalGrid(cells = GridCells.Adaptive(minSize = 128.dp)){
                     items(imagenesListTest()) {
-                        SimpleTopCardInfo(imagen = it, height = 0.2f, width = 150.dp, onClick = {
-
-                        })
+                       SimpleImageCard(it)
                     }
 
                 }

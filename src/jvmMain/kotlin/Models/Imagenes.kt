@@ -5,6 +5,7 @@ import java.io.File
 data class Imagenes(
     val id:Int,
     val nombre:String,
+    val path:String,
     val height:Int,
     val width:Int,
     val file:File?
@@ -12,103 +13,56 @@ data class Imagenes(
 
 fun imagenesListTest():List<Imagenes>{
     return listOf(
+
         Imagenes(
             id = 1,
-            nombre = "Dazu",
+            nombre = "21eb9ade2f15021a9b35274360635b16.jpeg",
+            path = "~/Imágenes/Capcom/ChunLi",
             height = 1920,
-            width = 1080,
+            width = 120,
             file = null
         ),
         Imagenes(
             id = 1,
-            nombre = "Dazu",
+            nombre = "21eb9ade2f15021a9b35274360635b16.jpeg",
+            path = "~/Imágenes/Capcom/ChunLi",
             height = 1920,
-            width = 1080,
+            width = 120,
             file = null
         ),
         Imagenes(
             id = 1,
-            nombre = "Dazu",
+            nombre = "21eb9ade2f15021a9b35274360635b16.jpeg",
+            path = "~/Imágenes/Capcom/ChunLi",
             height = 1920,
-            width = 1080,
+            width = 120,
             file = null
         ),
         Imagenes(
             id = 1,
-            nombre = "Dazu",
+            nombre = "21eb9ade2f15021a9b35274360635b16.jpeg",
+            path = "~/Imágenes/Capcom/ChunLi",
             height = 1920,
-            width = 1080,
+            width = 120,
             file = null
         ),
         Imagenes(
             id = 1,
-            nombre = "Dazu",
+            nombre = "21eb9ade2f15021a9b35274360635b16.jpeg",
+            path = "~/Imágenes/Capcom/ChunLi",
             height = 1920,
-            width = 1080,
+            width = 120,
             file = null
         ),
         Imagenes(
             id = 1,
-            nombre = "Dazu",
+            nombre = "21eb9ade2f15021a9b35274360635b16.jpeg",
+            path = "~/Imágenes/Capcom/ChunLi",
             height = 1920,
-            width = 1080,
+            width = 120,
             file = null
         ),
-        Imagenes(
-            id = 1,
-            nombre = "Dazu",
-            height = 1920,
-            width = 1080,
-            file = null
-        ),
-        Imagenes(
-            id = 1,
-            nombre = "Dazu",
-            height = 1920,
-            width = 1080,
-            file = null
-        ),
-        Imagenes(
-            id = 1,
-            nombre = "Dazu",
-            height = 1920,
-            width = 1080,
-            file = null
-        ),
-        Imagenes(
-            id = 1,
-            nombre = "Dazu",
-            height = 1920,
-            width = 1080,
-            file = null
-        ),
-        Imagenes(
-            id = 1,
-            nombre = "Dazu",
-            height = 1920,
-            width = 1080,
-            file = null
-        ),
-        Imagenes(
-            id = 1,
-            nombre = "Dazu",
-            height = 1920,
-            width = 1080,
-            file = null
-        ),
-        Imagenes(
-            id = 1,
-            nombre = "Dazu",
-            height = 1920,
-            width = 1080,
-            file = null
-        ),
-        Imagenes(
-            id = 1,
-            nombre = "Dazu",
-            height = 1920,
-            width = 1080,
-            file = null
-        ),
+
+
     )
 }

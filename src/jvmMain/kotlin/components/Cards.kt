@@ -3,6 +3,7 @@ package components
 import Models.Imagenes
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -12,12 +13,22 @@ import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.IOException
 
 @Composable
 fun SimpleTopCardInfo(imagen: Imagenes, width:Dp, height:Float, onClick:()->Unit){
@@ -39,7 +50,7 @@ fun SimpleImageCardOptions(modifier: Modifier = Modifier,opt1Text:String,option2
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Process:", style = MaterialTheme.typography.h6)
             }
-            Row(modifier = Modifier.fillMaxWidth().padding(8.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+            Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 Text(text = opt1Text, style = MaterialTheme.typography.subtitle1, fontStyle = FontStyle.Italic)
                 IconToggleButton(checked = opt1Checked,
                 onCheckedChange = {option1Click.invoke()}){
@@ -120,6 +131,24 @@ fun SimpleImageCardOptions(modifier: Modifier = Modifier,opt1Text:String,option2
         }
 
     }
+
+
+@Composable
+fun SimpleImageCard(imagen: Imagenes){
+
+    Card(modifier = Modifier.width(150.dp).height(150.dp)) {
+        Column(modifier = Modifier.fillMaxSize()) {
+
+           /* Image(
+                painter = painterResource("${imagen.path}/${imagen.nombre}"),
+                contentDescription = "${imagen.nombre} loaded from ${imagen.path}",
+                modifier = Modifier.fillMaxWidth()
+            )*/
+        }
+    }
+}
+
+
 
 
 
