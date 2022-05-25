@@ -9,15 +9,13 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import components.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import theme.SimpleTheme
 import utils.MainFunctions
 import javax.swing.JFileChooser
@@ -49,6 +47,8 @@ fun App() {
 fun MainScreen() {
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween) {
 
+        val scope = rememberCoroutineScope()
+
         val prefijo = remember {
             mutableStateOf("")
         }
@@ -67,10 +67,13 @@ fun MainScreen() {
         }
 
 
-        val imageList = MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)
+        var imageList: List<Imagenes> by remember {
+            mutableStateOf(emptyList())
+        }
 
-
-
+        val loading = remember {
+            mutableStateOf(false)
+        }
 
 
         val fc = JFileChooser()
@@ -80,9 +83,10 @@ fun MainScreen() {
         fc.addChoosableFileFilter(filter)
 
 
-       Row(modifier = Modifier.fillMaxWidth()) {
-           SimpleTopCardInfo(imageList.size.toString(),220.dp,0.15f, onClick = {})
-       }
+        Row(modifier = Modifier.fillMaxWidth()) {
+
+            SimpleTopCardInfo(imageList.size.toString(), onClick = {})
+        }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
             SimpleInputField(
                 valueState = prefijo,
@@ -136,11 +140,43 @@ fun MainScreen() {
                 option2Click = { opt2Checked.value = !opt2Checked.value },
                 option2Text = "Separate Wall:",
                 start = {
-                    MainFunctions().convert(wallpaper = opt2Checked.value, name = opt1Checked.value,imageList,convertPath.value)
+                    scope.launch {
+                        MainFunctions().convert(
+                            wallpaper = opt2Checked.value,
+                            name = opt1Checked.value,
+                            imageList,
+                            convertPath.value
+                        )
+                        opt2Checked.value = false
+                        imageList = emptyList()
+                        loading.value = true
+                        imageList = MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)
+                        loading.value = false
+                    }
+
+                }, load = {
+                    scope.launch(Dispatchers.IO) {
+                        imageList = emptyList()
+                        loading.value = true
+                        imageList = MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)
+                        loading.value = false
+                    }
+
+
                 }
             )
 
             Card(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
+                if (loading.value) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        SimpleCircularProgressLoading(isDisplayed = loading.value)
+                    }
+                }
+
 
                 LazyVerticalGrid(cells = GridCells.Adaptive(minSize = 128.dp)) {
 

@@ -11,10 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Done
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,9 +33,9 @@ import java.io.File
 import java.io.IOException
 
 @Composable
-fun SimpleTopCardInfo(total: String, width: Dp, height: Float, onClick: () -> Unit) {
+fun SimpleTopCardInfo(total: String, onClick: () -> Unit) {
     Card(
-        modifier = Modifier.width(width).fillMaxHeight(height).padding(horizontal = 4.dp, vertical = 8.dp),
+        modifier = Modifier.width(250.dp).height(100.dp).padding(horizontal = 4.dp, vertical = 8.dp),
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
@@ -48,7 +45,7 @@ fun SimpleTopCardInfo(total: String, width: Dp, height: Float, onClick: () -> Un
         ) {
 
             Text("Total Images", style = MaterialTheme.typography.h6, modifier = Modifier.padding(bottom = 8.dp))
-            Text(total, style = MaterialTheme.typography.subtitle1)
+            Text(total.toString(), style = MaterialTheme.typography.subtitle1)
 
 
         }
@@ -66,10 +63,11 @@ fun SimpleImageCardOptions(
     option2Click: () -> Unit,
     opt1Checked: Boolean,
     opt2Checked: Boolean,
-    start: () -> Unit
+    start: () -> Unit,
+    load:() -> Unit
 ) {
     Card(modifier = modifier.height(400.dp).width(200.dp)) {
-        Column(modifier.fillMaxSize()) {
+        Column(modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceEvenly) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Process:", style = MaterialTheme.typography.h6)
             }
@@ -157,7 +155,15 @@ fun SimpleImageCardOptions(
                 }
 
             }
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+
+                Button(onClick = { load.invoke() }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(text = "Load Images")
+
+                    }
+                }
+
                 Button(onClick = { start.invoke() }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(text = "Start")
@@ -175,9 +181,6 @@ fun SimpleImageCardOptions(
 
 @Composable
 fun SimpleImageCard(imagen: Imagenes) {
-
-
-
 
     Card(modifier = Modifier.width(150.dp).height(150.dp).padding(2.dp)) {
         Column() {

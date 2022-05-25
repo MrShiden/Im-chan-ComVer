@@ -2,6 +2,7 @@ package utils
 
 import Models.Imagenes
 import androidx.compose.ui.res.loadImageBitmap
+import kotlinx.coroutines.flow.Flow
 import java.io.File
 
 
@@ -39,7 +40,7 @@ class MainFunctions {
         val ubicacion = File(imagesPath)
         var id = 0
 
-        val newImagenesList = mutableListOf<Imagenes>()
+       val newImagenesList = mutableListOf<Imagenes>()
 
             if (wallpaper) {
                 ubicacion.walk(FileWalkDirection.TOP_DOWN).forEach {
