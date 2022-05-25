@@ -65,7 +65,10 @@ fun MainScreen() {
         val opt2Checked = remember {
             mutableStateOf(false)
         }
+
+
         val imageList = MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)
+
 
 
 
@@ -77,13 +80,9 @@ fun MainScreen() {
         fc.addChoosableFileFilter(filter)
 
 
-        LazyRow(modifier = Modifier.fillMaxWidth()) {
-            items(imagenesListTest()) {
-                SimpleTopCardInfo(imagen = it, height = 0.2f, width = 150.dp, onClick = {
-
-                })
-            }
-        }
+       Row(modifier = Modifier.fillMaxWidth()) {
+           SimpleTopCardInfo(imageList.size.toString(),220.dp,0.15f, onClick = {})
+       }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
             SimpleInputField(
                 valueState = prefijo,

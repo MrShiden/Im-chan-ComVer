@@ -36,15 +36,21 @@ import java.io.File
 import java.io.IOException
 
 @Composable
-fun SimpleTopCardInfo(imagen: Imagenes, width: Dp, height: Float, onClick: () -> Unit) {
+fun SimpleTopCardInfo(total: String, width: Dp, height: Float, onClick: () -> Unit) {
     Card(
         modifier = Modifier.width(width).fillMaxHeight(height).padding(horizontal = 4.dp, vertical = 8.dp),
         shape = RoundedCornerShape(12.dp)
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Text(imagen.nombre)
-            Text(imagen.width.toString())
-            Text(imagen.height.toString())
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+
+            Text("Total Images", style = MaterialTheme.typography.h6, modifier = Modifier.padding(bottom = 8.dp))
+            Text(total, style = MaterialTheme.typography.subtitle1)
+
+
         }
 
     }
@@ -60,7 +66,7 @@ fun SimpleImageCardOptions(
     option2Click: () -> Unit,
     opt1Checked: Boolean,
     opt2Checked: Boolean,
-    start:() -> Unit
+    start: () -> Unit
 ) {
     Card(modifier = modifier.height(400.dp).width(200.dp)) {
         Column(modifier.fillMaxSize()) {
@@ -151,14 +157,15 @@ fun SimpleImageCardOptions(
                 }
 
             }
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                Button(onClick = { start.invoke() }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(text = "Start")
 
-            Button(onClick = {start.invoke()}){
-                Row {
-                    Icon(imageVector = Icons.Default.Star, contentDescription = "Start", modifier = Modifier.padding(horizontal = 8.dp))
-                    Text(text = "Start")
-
+                    }
                 }
             }
+
 
         }
     }
@@ -169,10 +176,13 @@ fun SimpleImageCardOptions(
 @Composable
 fun SimpleImageCard(imagen: Imagenes) {
 
+
+
+
     Card(modifier = Modifier.width(150.dp).height(150.dp).padding(2.dp)) {
         Column() {
-
-            AsyncImage(load = { components.loadImageBitmap(File("${imagen.path}/${imagen.nombre}")) },
+            AsyncImage(
+                load = { components.loadImageBitmap(File("${imagen.path}/${imagen.nombre}")) },
                 painterFor = { remember { BitmapPainter(it) } },
                 contentDescription = "Bla",
                 modifier = Modifier.fillMaxSize(),
