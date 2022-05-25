@@ -33,9 +33,9 @@ import java.io.File
 import java.io.IOException
 
 @Composable
-fun SimpleTopCardInfo(total: String, onClick: () -> Unit) {
+fun SimpleTopCardInfo(total: String, onClick: () -> Unit,modifier: Modifier = Modifier) {
     Card(
-        modifier = Modifier.width(250.dp).height(100.dp).padding(horizontal = 4.dp, vertical = 8.dp),
+        modifier = modifier.width(200.dp).height(100.dp),
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(

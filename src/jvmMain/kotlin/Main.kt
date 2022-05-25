@@ -85,7 +85,11 @@ fun MainScreen() {
 
         Row(modifier = Modifier.fillMaxWidth()) {
 
-            SimpleTopCardInfo(imageList.size.toString(), onClick = {})
+            SimpleTopCardInfo(
+                imageList.size.toString(),
+                onClick = {},
+                modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
+            )
         }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
             SimpleInputField(
