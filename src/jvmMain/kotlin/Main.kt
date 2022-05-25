@@ -78,26 +78,42 @@ fun MainScreen() {
             }
         }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
-            SimpleInputField(valueState = prefijo, labelId = "Prefijo", modifier = Modifier.width(200.dp), onClick = {})
-            SimpleInputField(valueState = originPath, labelId = "Path to convert", modifier = Modifier.width(200.dp), enabled = false, onClick = {
+            SimpleInputField(
+                valueState = prefijo,
+                labelId = "Prefijo",
+                modifier = Modifier.width(200.dp),
+                onClick = {},
+                enabled = opt1Checked.value
+            )
+            SimpleInputField(
+                valueState = originPath,
+                labelId = "Path to convert",
+                modifier = Modifier.width(200.dp),
+                enabled = false,
+                onClick = {
 
-                val returnVal = fc.showOpenDialog(null)
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    val path = fc.selectedFile.path
-                    originPath.value = path
-                }
+                    val returnVal = fc.showOpenDialog(null)
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        val path = fc.selectedFile.path
+                        originPath.value = path
+                    }
 
 
-            })
-            SimpleInputField(valueState = convertPath, labelId = "Destiny Path", modifier = Modifier.width(200.dp), enabled = false, onClick = {
+                })
+            SimpleInputField(
+                valueState = convertPath,
+                labelId = "Destiny Path",
+                modifier = Modifier.width(200.dp),
+                enabled = false,
+                onClick = {
 
-                val returnVal = fc.showOpenDialog(null)
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    val path = fc.selectedFile.path
-                    convertPath.value = path
-                }
+                    val returnVal = fc.showOpenDialog(null)
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        val path = fc.selectedFile.path
+                        convertPath.value = path
+                    }
 
-            })
+                })
         }
 
         Row(modifier = Modifier.fillMaxWidth().padding(top = 24.dp), horizontalArrangement = Arrangement.SpaceBetween) {
@@ -108,23 +124,28 @@ fun MainScreen() {
                 opt1Checked = opt1Checked.value,
                 opt2Checked = opt2Checked.value,
                 option1Click = {
-                    opt1Checked.value = !opt1Checked.value },
+                    opt1Checked.value = !opt1Checked.value
+                    prefijo.value = ""
+                },
                 option2Click = { opt2Checked.value = !opt2Checked.value },
                 option2Text = "Separate Wall:"
             )
 
             Card(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
 
-                LazyVerticalGrid(cells = GridCells.Adaptive(minSize = 128.dp)){
-                    items(MainFunctions().getImagesList(originPath.value)) {
-                       SimpleImageCard(it)
+              LazyVerticalGrid(cells = GridCells.Adaptive(minSize = 128.dp)) {
+
+                items(MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)) {
+                        SimpleImageCard(it)
                     }
+
 
                 }
 
+
+
+
             }
-
-
 
 
         }

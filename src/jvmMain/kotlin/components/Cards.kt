@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.jetbrains.skia.Bitmap
 import java.io.File
 import java.io.IOException
 
@@ -140,18 +141,21 @@ fun SimpleImageCardOptions(modifier: Modifier = Modifier,opt1Text:String,option2
 @Composable
 fun SimpleImageCard(imagen: Imagenes){
 
-    Card(modifier = Modifier.width(150.dp).height(150.dp)) {
+    Card(modifier = Modifier.width(150.dp).height(150.dp).padding(2.dp)) {
         Column() {
 
            val imageBitmap = remember {
                loadImageBitmap(imagen.file!!.inputStream())
            }
 
+
            Image(
                painter = BitmapPainter(image = imageBitmap),
                 contentDescription = "${imagen.nombre} loaded from ${imagen.path}",
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+               contentScale = ContentScale.Crop
             )
+
         }
     }
 }
