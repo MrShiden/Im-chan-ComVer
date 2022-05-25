@@ -14,13 +14,17 @@ import androidx.compose.material.icons.outlined.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.loadImageBitmap
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.useResource
 import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.Dp
@@ -137,13 +141,17 @@ fun SimpleImageCardOptions(modifier: Modifier = Modifier,opt1Text:String,option2
 fun SimpleImageCard(imagen: Imagenes){
 
     Card(modifier = Modifier.width(150.dp).height(150.dp)) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column() {
 
-           /* Image(
-                painter = painterResource("${imagen.path}/${imagen.nombre}"),
+           val imageBitmap = remember {
+               loadImageBitmap(imagen.file!!.inputStream())
+           }
+
+           Image(
+               painter = BitmapPainter(image = imageBitmap),
                 contentDescription = "${imagen.nombre} loaded from ${imagen.path}",
                 modifier = Modifier.fillMaxWidth()
-            )*/
+            )
         }
     }
 }
