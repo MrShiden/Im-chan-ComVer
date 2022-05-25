@@ -36,8 +36,11 @@ import java.io.File
 import java.io.IOException
 
 @Composable
-fun SimpleTopCardInfo(imagen: Imagenes, width:Dp, height:Float, onClick:()->Unit){
-    Card(modifier = Modifier.width(width).fillMaxHeight(height).padding(horizontal = 4.dp, vertical = 8.dp), shape = RoundedCornerShape(12.dp)) {
+fun SimpleTopCardInfo(imagen: Imagenes, width: Dp, height: Float, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier.width(width).fillMaxHeight(height).padding(horizontal = 4.dp, vertical = 8.dp),
+        shape = RoundedCornerShape(12.dp)
+    ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(imagen.nombre)
             Text(imagen.width.toString())
@@ -49,16 +52,29 @@ fun SimpleTopCardInfo(imagen: Imagenes, width:Dp, height:Float, onClick:()->Unit
 }
 
 @Composable
-fun SimpleImageCardOptions(modifier: Modifier = Modifier,opt1Text:String,option2Text:String,option1Click:() -> Unit,option2Click:()-> Unit,opt1Checked:Boolean,opt2Checked:Boolean){
+fun SimpleImageCardOptions(
+    modifier: Modifier = Modifier,
+    opt1Text: String,
+    option2Text: String,
+    option1Click: () -> Unit,
+    option2Click: () -> Unit,
+    opt1Checked: Boolean,
+    opt2Checked: Boolean,
+    start:() -> Unit
+) {
     Card(modifier = modifier.height(400.dp).width(200.dp)) {
         Column(modifier.fillMaxSize()) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Process:", style = MaterialTheme.typography.h6)
             }
-            Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(text = opt1Text, style = MaterialTheme.typography.subtitle1, fontStyle = FontStyle.Italic)
                 IconToggleButton(checked = opt1Checked,
-                onCheckedChange = {option1Click.invoke()}){
+                    onCheckedChange = { option1Click.invoke() }) {
                     val transition = updateTransition(opt1Checked, label = "Checked indicator")
 
                     val tint by transition.animateColor(
@@ -92,11 +108,15 @@ fun SimpleImageCardOptions(modifier: Modifier = Modifier,opt1Text:String,option2
                     )
                 }
 
-                }
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(text = option2Text, style = MaterialTheme.typography.subtitle1, fontStyle = FontStyle.Italic)
                 IconToggleButton(checked = opt1Checked,
-                    onCheckedChange = {option2Click.invoke()}){
+                    onCheckedChange = { option2Click.invoke() }) {
                     val transition = updateTransition(opt2Checked, label = "Checked indicator")
 
                     val tint by transition.animateColor(
@@ -132,35 +152,32 @@ fun SimpleImageCardOptions(modifier: Modifier = Modifier,opt1Text:String,option2
 
             }
 
-            }
-        }
+            Button(onClick = {start.invoke()}){
+                Row {
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Start", modifier = Modifier.padding(horizontal = 8.dp))
+                    Text(text = "Start")
 
+                }
+            }
+
+        }
     }
+
+}
 
 
 @Composable
-fun SimpleImageCard(imagen: Imagenes){
+fun SimpleImageCard(imagen: Imagenes) {
 
     Card(modifier = Modifier.width(150.dp).height(150.dp).padding(2.dp)) {
         Column() {
 
-           val imageBitmap = remember {
-               loadImageBitmap(imagen.file!!.inputStream())
-           }
-
-
-
-           /*Image(
-               painter = BitmapPainter(image = imageBitmap),
-                contentDescription = "${imagen.nombre} loaded from ${imagen.path}",
-                modifier = Modifier.fillMaxWidth(),
-               contentScale = ContentScale.Crop
-            )*/
-
-            AsyncImage(load = { components.loadImageBitmap(File("${imagen.path}/${imagen.nombre}"))}, painterFor = { remember { BitmapPainter(imageBitmap) }},
-            contentDescription = "Bla", modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
-
-
+            AsyncImage(load = { components.loadImageBitmap(File("${imagen.path}/${imagen.nombre}")) },
+                painterFor = { remember { BitmapPainter(it) } },
+                contentDescription = "Bla",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
 
         }
     }

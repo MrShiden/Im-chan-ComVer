@@ -8,6 +8,7 @@ data class Imagenes(
     val path:String,
     val height:Int,
     val width:Int,
+    val extension:String,
     val file:File?
 )
 
@@ -20,6 +21,7 @@ fun imagenesListTest():List<Imagenes>{
             path = "~/Imágenes/Capcom/ChunLi",
             height = 1920,
             width = 120,
+            extension = "vla",
             file = null
         ),
         Imagenes(
@@ -28,6 +30,7 @@ fun imagenesListTest():List<Imagenes>{
             path = "~/Imágenes/Capcom/ChunLi",
             height = 1920,
             width = 120,
+            extension = "vla",
             file = null
         ),
         Imagenes(
@@ -36,6 +39,7 @@ fun imagenesListTest():List<Imagenes>{
             path = "~/Imágenes/Capcom/ChunLi",
             height = 1920,
             width = 120,
+            extension = "vla",
             file = null
         ),
         Imagenes(
@@ -44,6 +48,7 @@ fun imagenesListTest():List<Imagenes>{
             path = "~/Imágenes/Capcom/ChunLi",
             height = 1920,
             width = 120,
+            extension = "vla",
             file = null
         ),
         Imagenes(
@@ -52,6 +57,7 @@ fun imagenesListTest():List<Imagenes>{
             path = "~/Imágenes/Capcom/ChunLi",
             height = 1920,
             width = 120,
+            extension = "vla",
             file = null
         ),
         Imagenes(
@@ -60,6 +66,7 @@ fun imagenesListTest():List<Imagenes>{
             path = "~/Imágenes/Capcom/ChunLi",
             height = 1920,
             width = 120,
+            extension = "vla",
             file = null
         ),
 

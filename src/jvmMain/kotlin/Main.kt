@@ -1,4 +1,5 @@
 // Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+import Models.Imagenes
 import Models.imagenesListTest
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -7,14 +8,16 @@ import androidx.compose.foundation.lazy.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import components.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import theme.SimpleTheme
 import utils.MainFunctions
 import javax.swing.JFileChooser
@@ -62,6 +65,10 @@ fun MainScreen() {
         val opt2Checked = remember {
             mutableStateOf(false)
         }
+        val imageList = MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)
+
+
+
 
         val fc = JFileChooser()
         val filter = FileNameExtensionFilter("Imagenes", "jpg", "png", "gif", "bmp", "jpeg")
@@ -128,23 +135,25 @@ fun MainScreen() {
                     prefijo.value = ""
                 },
                 option2Click = { opt2Checked.value = !opt2Checked.value },
-                option2Text = "Separate Wall:"
+                option2Text = "Separate Wall:",
+                start = {
+                    MainFunctions().convert(wallpaper = opt2Checked.value, name = opt1Checked.value,imageList,convertPath.value)
+                }
             )
 
             Card(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
 
-              LazyVerticalGrid(cells = GridCells.Adaptive(minSize = 128.dp)) {
+                LazyVerticalGrid(cells = GridCells.Adaptive(minSize = 128.dp)) {
 
-                items(MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)) {
+                    items(imageList) {
+
                         SimpleImageCard(it)
+
+
                     }
 
 
-
-
                 }
-
-
 
 
             }
