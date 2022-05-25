@@ -12,8 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
+import androidx.compose.ui.window.*
 import components.*
 import kotlinx.coroutines.*
 import theme.SimpleTheme
@@ -49,6 +48,7 @@ fun MainScreen() {
 
         val scope = rememberCoroutineScope()
 
+
         val prefijo = remember {
             mutableStateOf("")
         }
@@ -66,10 +66,10 @@ fun MainScreen() {
             mutableStateOf(false)
         }
 
-
         var imageList: List<Imagenes> by remember {
             mutableStateOf(emptyList())
         }
+
 
         val loading = remember {
             mutableStateOf(false)
@@ -160,6 +160,7 @@ fun MainScreen() {
                         loading.value = true
                         imageList = MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)
                         loading.value = false
+
                     }
 
 
@@ -201,7 +202,11 @@ fun MainScreen() {
 
 
 fun main() = application {
-    Window(onCloseRequest = ::exitApplication) {
+    Window(
+        onCloseRequest = ::exitApplication,
+        title = "Im-Chan",
+        state = WindowState(position = WindowPosition.Aligned(Alignment.Center))
+    ) {
         App()
     }
 }
