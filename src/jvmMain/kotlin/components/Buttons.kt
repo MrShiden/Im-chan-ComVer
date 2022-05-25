@@ -12,10 +12,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SimpleIconButton(modifier: Modifier = Modifier,icon:ImageVector, onClick:()-> Unit ) {
+fun SimpleIconButton(modifier: Modifier = Modifier, icon: ImageVector, onClick: () -> Unit) {
 
-    Card(modifier = modifier.clickable { onClick.invoke() }, shape = RoundedCornerShape(12.dp), border = BorderStroke(0.dp, color = Color.Transparent)) {
-        Icon(imageVector = icon,contentDescription = null)
+    Card(
+        modifier = modifier.clickable { onClick.invoke() },
+        shape = RoundedCornerShape(12.dp),
+        border = BorderStroke(0.dp, color = Color.Transparent)
+    ) {
+        Icon(imageVector = icon, contentDescription = null)
 
 
     }
