@@ -36,11 +36,11 @@ import java.io.IOException
 @Composable
 fun SimpleTopCardInfo(total: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Card(
-        modifier = modifier.width(200.dp).height(100.dp),
+        modifier = modifier.width(200.dp).fillMaxHeight(),
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -181,9 +181,9 @@ fun SimpleImageCardOptions(
 
 
 @Composable
-fun SimpleImageCard(imagen: Imagenes,onClick: () -> Unit) {
+fun SimpleImageCard(imagen: Imagenes, onClick: () -> Unit) {
 
-    Card(modifier = Modifier.width(150.dp).height(150.dp).padding(2.dp)) {
+    Card(modifier = Modifier.width(250.dp).height(250.dp).padding(2.dp)) {
         Column(modifier = Modifier.clickable { onClick.invoke() }) {
             AsyncImage(
                 load = { components.loadImageBitmap(File("${imagen.path}/${imagen.nombre}")) },
@@ -195,6 +195,25 @@ fun SimpleImageCard(imagen: Imagenes,onClick: () -> Unit) {
 
         }
     }
+}
+
+
+@Composable
+fun SimpleImCardInfo(image: Imagenes) {
+
+    Card(modifier = Modifier.fillMaxWidth(1f).fillMaxHeight().padding(top = 8.dp, end = 8.dp)) {
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.SpaceEvenly) {
+                Text(text = "Name: ${image.nombre}", style = MaterialTheme.typography.subtitle1, maxLines = 1)
+                Text(text = "Format: ${image.extension}", style = MaterialTheme.typography.subtitle2)
+                Text(text = "Dimension: ${image.width} x ${image.height}", style = MaterialTheme.typography.subtitle2)
+                Text(text = "Path: ${image.path}", style = MaterialTheme.typography.subtitle2)
+            }
+        }
+
+    }
+
+
 }
 
 

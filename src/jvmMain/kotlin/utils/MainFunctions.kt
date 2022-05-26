@@ -36,7 +36,6 @@ class MainFunctions {
 
     fun getImagesList(imagesPath: String, wallpaper: Boolean): List<Imagenes> {
 
-
         val ubicacion = File(imagesPath)
         var id = 0
 

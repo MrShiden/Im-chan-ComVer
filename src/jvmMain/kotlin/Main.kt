@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.*
 import components.*
@@ -48,6 +49,16 @@ fun MainScreen() {
 
         val scope = rememberCoroutineScope()
 
+val imageTesto = Imagenes(
+            id = 0,
+            nombre = "-",
+            path = "-",
+            height = 0,
+            width = 0,
+            extension = "-",
+            file = null
+        )
+
 
         val prefijo = remember { mutableStateOf("") }
         val originPath = remember { mutableStateOf("") }
@@ -56,6 +67,7 @@ fun MainScreen() {
         val opt2Checked = remember { mutableStateOf(false) }
         var imageList: List<Imagenes> by remember { mutableStateOf(emptyList()) }
         val loading = remember { mutableStateOf(false) }
+        val imagePreview = remember { mutableStateOf(imageTesto) }
 
 
         val fc = JFileChooser()
@@ -65,15 +77,16 @@ fun MainScreen() {
         fc.addChoosableFileFilter(filter)
 
 
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(modifier = Modifier.fillMaxWidth().fillMaxHeight(0.15f), verticalAlignment = Alignment.CenterVertically) {
 
             SimpleTopCardInfo(
                 imageList.size.toString(),
                 onClick = {},
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
             )
+            SimpleImCardInfo(imagePreview.value)
         }
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
+        Row(modifier = Modifier.fillMaxWidth().fillMaxHeight(0.2f), horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.CenterVertically) {
             SimpleInputField(
                 valueState = prefijo,
                 labelId = "Prefijo",
@@ -102,7 +115,6 @@ fun MainScreen() {
                 modifier = Modifier.width(200.dp),
                 enabled = false,
                 onClick = {
-
                     val returnVal = fc.showOpenDialog(null)
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
                         val path = fc.selectedFile.path
@@ -114,45 +126,48 @@ fun MainScreen() {
 
         Row(modifier = Modifier.fillMaxWidth().padding(top = 24.dp), horizontalArrangement = Arrangement.SpaceBetween) {
 
-            SimpleImageCardOptions(
-                modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
-                opt1Text = "Change Name:",
-                opt1Checked = opt1Checked.value,
-                opt2Checked = opt2Checked.value,
-                option1Click = {
-                    opt1Checked.value = !opt1Checked.value
-                    prefijo.value = ""
-                },
-                option2Click = { opt2Checked.value = !opt2Checked.value },
-                option2Text = "Separate Wall:",
-                start = {
-                    scope.launch(Dispatchers.IO) {
-                        MainFunctions().convert(
-                            wallpaper = opt2Checked.value,
-                            name = opt1Checked.value,
-                            imageList,
-                            convertPath.value,
-                            prefijo.value
-                        )
-                        opt2Checked.value = false
-                        imageList = emptyList()
-                        loading.value = true
-                        imageList = MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)
-                        loading.value = false
+            Column(modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.Center) {
+
+                SimpleImageCardOptions(
+                    modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
+                    opt1Text = "Change Name:",
+                    opt1Checked = opt1Checked.value,
+                    opt2Checked = opt2Checked.value,
+                    option1Click = {
+                        opt1Checked.value = !opt1Checked.value
+                        prefijo.value = ""
+                    },
+                    option2Click = { opt2Checked.value = !opt2Checked.value },
+                    option2Text = "Separate Wall:",
+                    start = {
+                        scope.launch(Dispatchers.IO) {
+                            MainFunctions().convert(
+                                wallpaper = opt2Checked.value,
+                                name = opt1Checked.value,
+                                imageList,
+                                convertPath.value,
+                                prefijo.value
+                            )
+                            opt2Checked.value = false
+                            imageList = emptyList()
+                            loading.value = true
+                            imageList = MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)
+                            loading.value = false
+                        }
+
+                    }, load = {
+                        scope.launch(Dispatchers.IO) {
+                            imageList = emptyList()
+                            loading.value = true
+                            imageList = MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)
+                            loading.value = false
+
+                        }
+
+
                     }
-
-                }, load = {
-                    scope.launch(Dispatchers.IO) {
-                        imageList = emptyList()
-                        loading.value = true
-                        imageList = MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)
-                        loading.value = false
-
-                    }
-
-
-                }
-            )
+                )
+            }
 
             Card(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
                 if (loading.value) {
@@ -166,11 +181,12 @@ fun MainScreen() {
                 }
 
 
-                LazyVerticalGrid(cells = GridCells.Adaptive(minSize = 128.dp)) {
+                LazyVerticalGrid(cells = GridCells.Adaptive(minSize = 250.dp)) {
 
                     items(imageList) {
 
                         SimpleImageCard(it, onClick = {
+                            imagePreview.value = it
 
                         })
 
@@ -194,7 +210,7 @@ fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         title = "Im-Chan",
-        state = WindowState(position = WindowPosition.Aligned(Alignment.Center))
+        state = WindowState(position = WindowPosition.Aligned(Alignment.Center), size = DpSize(width = 1280.dp, height = 900.dp))
     ) {
         App()
     }
