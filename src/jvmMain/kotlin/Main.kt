@@ -210,7 +210,7 @@ fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         title = "Im-Chan",
-        state = WindowState(position = WindowPosition.Aligned(Alignment.Center), size = DpSize(width = 1280.dp, height = 900.dp))
+        state = WindowState(position = WindowPosition.Aligned(Alignment.Center), size = DpSize(width = 1024.dp, height = 720.dp))
     ) {
         App()
     }

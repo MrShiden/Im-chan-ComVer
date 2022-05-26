@@ -201,7 +201,7 @@ fun SimpleImageCard(imagen: Imagenes, onClick: () -> Unit) {
 @Composable
 fun SimpleImCardInfo(image: Imagenes) {
 
-    Card(modifier = Modifier.fillMaxWidth(1f).fillMaxHeight().padding(top = 8.dp, end = 8.dp)) {
+    Card(modifier = Modifier.fillMaxWidth(1f).fillMaxHeight().padding(top = 8.dp, end = 24.dp)) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.SpaceEvenly) {
                 Text(text = "Name: ${image.nombre}", style = MaterialTheme.typography.subtitle1, maxLines = 1)
