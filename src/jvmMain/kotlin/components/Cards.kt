@@ -4,6 +4,7 @@ import Models.Imagenes
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -33,7 +34,7 @@ import java.io.File
 import java.io.IOException
 
 @Composable
-fun SimpleTopCardInfo(total: String, onClick: () -> Unit,modifier: Modifier = Modifier) {
+fun SimpleTopCardInfo(total: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier.width(200.dp).height(100.dp),
         shape = RoundedCornerShape(12.dp)
@@ -64,7 +65,7 @@ fun SimpleImageCardOptions(
     opt1Checked: Boolean,
     opt2Checked: Boolean,
     start: () -> Unit,
-    load:() -> Unit
+    load: () -> Unit
 ) {
     Card(modifier = modifier.height(400.dp).width(200.dp)) {
         Column(modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceEvenly) {
@@ -180,10 +181,10 @@ fun SimpleImageCardOptions(
 
 
 @Composable
-fun SimpleImageCard(imagen: Imagenes) {
+fun SimpleImageCard(imagen: Imagenes,onClick: () -> Unit) {
 
     Card(modifier = Modifier.width(150.dp).height(150.dp).padding(2.dp)) {
-        Column() {
+        Column(modifier = Modifier.clickable { onClick.invoke() }) {
             AsyncImage(
                 load = { components.loadImageBitmap(File("${imagen.path}/${imagen.nombre}")) },
                 painterFor = { remember { BitmapPainter(it) } },

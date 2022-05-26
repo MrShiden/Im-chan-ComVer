@@ -49,31 +49,13 @@ fun MainScreen() {
         val scope = rememberCoroutineScope()
 
 
-        val prefijo = remember {
-            mutableStateOf("")
-        }
-        val originPath = remember {
-            mutableStateOf("")
-        }
-        val convertPath = remember {
-            mutableStateOf("")
-        }
-
-        val opt1Checked = remember {
-            mutableStateOf(true)
-        }
-        val opt2Checked = remember {
-            mutableStateOf(false)
-        }
-
-        var imageList: List<Imagenes> by remember {
-            mutableStateOf(emptyList())
-        }
-
-
-        val loading = remember {
-            mutableStateOf(false)
-        }
+        val prefijo = remember { mutableStateOf("") }
+        val originPath = remember { mutableStateOf("") }
+        val convertPath = remember { mutableStateOf("") }
+        val opt1Checked = remember { mutableStateOf(true) }
+        val opt2Checked = remember { mutableStateOf(false) }
+        var imageList: List<Imagenes> by remember { mutableStateOf(emptyList()) }
+        val loading = remember { mutableStateOf(false) }
 
 
         val fc = JFileChooser()
@@ -144,12 +126,13 @@ fun MainScreen() {
                 option2Click = { opt2Checked.value = !opt2Checked.value },
                 option2Text = "Separate Wall:",
                 start = {
-                    scope.launch {
+                    scope.launch(Dispatchers.IO) {
                         MainFunctions().convert(
                             wallpaper = opt2Checked.value,
                             name = opt1Checked.value,
                             imageList,
-                            convertPath.value
+                            convertPath.value,
+                            prefijo.value
                         )
                         opt2Checked.value = false
                         imageList = emptyList()
@@ -187,7 +170,9 @@ fun MainScreen() {
 
                     items(imageList) {
 
-                        SimpleImageCard(it)
+                        SimpleImageCard(it, onClick = {
+
+                        })
 
 
                     }
