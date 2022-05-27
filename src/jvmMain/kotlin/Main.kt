@@ -77,7 +77,7 @@ val imageTesto = Imagenes(
         fc.addChoosableFileFilter(filter)
 
 
-        Row(modifier = Modifier.fillMaxWidth().fillMaxHeight(0.15f), verticalAlignment = Alignment.CenterVertically) {
+        Row(modifier = Modifier.fillMaxWidth().fillMaxHeight(0.18f), verticalAlignment = Alignment.CenterVertically) {
 
             SimpleTopCardInfo(
                 imageList.size.toString(),

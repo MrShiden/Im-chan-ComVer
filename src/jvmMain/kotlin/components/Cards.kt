@@ -30,7 +30,9 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.skia.Bitmap
+import java.awt.Desktop
 import java.io.File
+import java.io.FileInputStream
 import java.io.IOException
 
 @Composable
@@ -187,10 +189,17 @@ fun SimpleImageCardOptions(
 @Composable
 fun SimpleImageCard(imagen: Imagenes, onClick: () -> Unit) {
 
+    val imagePath = "${imagen.path}/${imagen.nombre}"
+    val d = Desktop.getDesktop()
+
     Card(modifier = Modifier.width(250.dp).height(250.dp).padding(2.dp)) {
-        Column(modifier = Modifier.clickable { onClick.invoke() }) {
+        Column(modifier = Modifier.clickable {
+
+
+            d.open(File(imagePath)).apply {  }
+            onClick.invoke() }) {
             AsyncImage(
-                load = { components.loadImageBitmap(File("${imagen.path}/${imagen.nombre}")) },
+                load = { components.loadImageBitmap(File(imagePath)) },
                 painterFor = { remember { BitmapPainter(it) } },
                 contentDescription = "Bla",
                 modifier = Modifier.fillMaxSize(),
@@ -207,12 +216,13 @@ fun SimpleImCardInfo(image: Imagenes) {
 
     Card(modifier = Modifier.fillMaxWidth(1f).fillMaxHeight().padding(top = 8.dp, end = 24.dp)) {
         Row(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.SpaceEvenly) {
+            Column(modifier = Modifier.fillMaxHeight(0.7f), verticalArrangement = Arrangement.SpaceEvenly) {
                 Text(text = "Name: ${image.nombre}", style = MaterialTheme.typography.subtitle1, maxLines = 1)
                 Text(text = "Format: ${image.extension}", style = MaterialTheme.typography.subtitle2)
                 Text(text = "Dimension: ${image.width} x ${image.height}", style = MaterialTheme.typography.subtitle2)
                 Text(text = "Path: ${image.path}", style = MaterialTheme.typography.subtitle2)
             }
+
         }
 
     }

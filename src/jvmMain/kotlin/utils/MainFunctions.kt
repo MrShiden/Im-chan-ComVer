@@ -97,6 +97,8 @@ class MainFunctions {
     }
 
 
+
+
     fun getImageHeight(file: File): Int {
 
         val imageBitmap = loadImageBitmap(file.inputStream())
