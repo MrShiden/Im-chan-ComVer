@@ -191,12 +191,17 @@ fun SimpleImageCard(imagen: Imagenes, onClick: () -> Unit) {
 
     val imagePath = "${imagen.path}/${imagen.nombre}"
     val d = Desktop.getDesktop()
+    val os = System.getProperty("os.name")
 
     Card(modifier = Modifier.width(250.dp).height(250.dp).padding(2.dp)) {
         Column(modifier = Modifier.clickable {
 
+            if (os!="Linux"){
+                println("Esto no es Linux :(")
+                d.open(File(imagePath))
+            }
 
-            d.open(File(imagePath)).apply {  }
+
             onClick.invoke() }) {
             AsyncImage(
                 load = { components.loadImageBitmap(File(imagePath)) },
