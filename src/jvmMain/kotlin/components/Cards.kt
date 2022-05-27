@@ -48,7 +48,6 @@ fun SimpleTopCardInfo(total: String, onClick: () -> Unit, modifier: Modifier = M
             Text("Total Images", style = MaterialTheme.typography.h6, modifier = Modifier.padding(bottom = 8.dp))
             Text(total.toString(), style = MaterialTheme.typography.subtitle1)
 
-
         }
 
     }
@@ -69,90 +68,95 @@ fun SimpleImageCardOptions(
 ) {
     Card(modifier = modifier.height(400.dp).width(200.dp)) {
         Column(modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceEvenly) {
+
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(text = "Process:", style = MaterialTheme.typography.h6)
             }
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = opt1Text, style = MaterialTheme.typography.subtitle1, fontStyle = FontStyle.Italic)
-                IconToggleButton(checked = opt1Checked,
-                    onCheckedChange = { option1Click.invoke() }) {
-                    val transition = updateTransition(opt1Checked, label = "Checked indicator")
+            Column {
 
-                    val tint by transition.animateColor(
-                        label = "Tint"
-                    ) { isChecked ->
-                        if (isChecked) Color.Green else Color.LightGray
+
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = opt1Text, style = MaterialTheme.typography.subtitle2, fontStyle = FontStyle.Italic)
+                    IconToggleButton(checked = opt1Checked,
+                        onCheckedChange = { option1Click.invoke() }) {
+                        val transition = updateTransition(opt1Checked, label = "Checked indicator")
+
+                        val tint by transition.animateColor(
+                            label = "Tint"
+                        ) { isChecked ->
+                            if (isChecked) Color.Green else Color.LightGray
+                        }
+
+                        val size by transition.animateDp(
+                            transitionSpec = {
+                                if (false isTransitioningTo true) {
+                                    keyframes {
+                                        durationMillis = 250
+                                        30.dp at 0 with LinearOutSlowInEasing // for 0-15 ms
+                                        35.dp at 15 with FastOutLinearInEasing // for 15-75 ms
+                                        40.dp at 75 // ms
+                                        35.dp at 150 // ms
+                                    }
+                                } else {
+                                    spring(stiffness = Spring.StiffnessVeryLow)
+                                }
+                            },
+                            label = "Size"
+                        ) { 30.dp }
+
+                        Icon(
+                            imageVector = if (opt1Checked) Icons.Outlined.Check else Icons.Outlined.Check,
+                            contentDescription = null,
+                            tint = tint,
+                            modifier = Modifier.size(size)
+                        )
                     }
 
-                    val size by transition.animateDp(
-                        transitionSpec = {
-                            if (false isTransitioningTo true) {
-                                keyframes {
-                                    durationMillis = 250
-                                    30.dp at 0 with LinearOutSlowInEasing // for 0-15 ms
-                                    35.dp at 15 with FastOutLinearInEasing // for 15-75 ms
-                                    40.dp at 75 // ms
-                                    35.dp at 150 // ms
-                                }
-                            } else {
-                                spring(stiffness = Spring.StiffnessVeryLow)
-                            }
-                        },
-                        label = "Size"
-                    ) { 30.dp }
-
-                    Icon(
-                        imageVector = if (opt1Checked) Icons.Outlined.Check else Icons.Outlined.Check,
-                        contentDescription = null,
-                        tint = tint,
-                        modifier = Modifier.size(size)
-                    )
                 }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = option2Text, style = MaterialTheme.typography.subtitle2, fontStyle = FontStyle.Italic)
+                    IconToggleButton(checked = opt1Checked,
+                        onCheckedChange = { option2Click.invoke() }) {
+                        val transition = updateTransition(opt2Checked, label = "Checked indicator")
 
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = option2Text, style = MaterialTheme.typography.subtitle1, fontStyle = FontStyle.Italic)
-                IconToggleButton(checked = opt1Checked,
-                    onCheckedChange = { option2Click.invoke() }) {
-                    val transition = updateTransition(opt2Checked, label = "Checked indicator")
+                        val tint by transition.animateColor(
+                            label = "Tint"
+                        ) { isChecked ->
+                            if (isChecked) Color.Green else Color.LightGray
+                        }
 
-                    val tint by transition.animateColor(
-                        label = "Tint"
-                    ) { isChecked ->
-                        if (isChecked) Color.Green else Color.LightGray
-                    }
-
-                    val size by transition.animateDp(
-                        transitionSpec = {
-                            if (false isTransitioningTo true) {
-                                keyframes {
-                                    durationMillis = 250
-                                    30.dp at 0 with LinearOutSlowInEasing // for 0-15 ms
-                                    35.dp at 15 with FastOutLinearInEasing // for 15-75 ms
-                                    40.dp at 75 // ms
-                                    35.dp at 150 // ms
+                        val size by transition.animateDp(
+                            transitionSpec = {
+                                if (false isTransitioningTo true) {
+                                    keyframes {
+                                        durationMillis = 250
+                                        30.dp at 0 with LinearOutSlowInEasing // for 0-15 ms
+                                        35.dp at 15 with FastOutLinearInEasing // for 15-75 ms
+                                        40.dp at 75 // ms
+                                        35.dp at 150 // ms
+                                    }
+                                } else {
+                                    spring(stiffness = Spring.StiffnessVeryLow)
                                 }
-                            } else {
-                                spring(stiffness = Spring.StiffnessVeryLow)
-                            }
-                        },
-                        label = "Size"
-                    ) { 30.dp }
+                            },
+                            label = "Size"
+                        ) { 30.dp }
 
-                    Icon(
-                        imageVector = if (opt2Checked) Icons.Outlined.Check else Icons.Outlined.Check,
-                        contentDescription = null,
-                        tint = tint,
-                        modifier = Modifier.size(size)
-                    )
+                        Icon(
+                            imageVector = if (opt2Checked) Icons.Outlined.Check else Icons.Outlined.Check,
+                            contentDescription = null,
+                            tint = tint,
+                            modifier = Modifier.size(size)
+                        )
+                    }
                 }
 
             }
