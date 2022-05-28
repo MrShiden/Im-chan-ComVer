@@ -1,6 +1,5 @@
 // Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 import Models.Imagenes
-import Models.imagenesListTest
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
@@ -17,7 +16,8 @@ import androidx.compose.ui.window.*
 import components.*
 import kotlinx.coroutines.*
 import theme.SimpleTheme
-import utils.MainFunctions
+import utils.convert
+import utils.getImagesList
 import javax.swing.JFileChooser
 import javax.swing.filechooser.FileNameExtensionFilter
 
@@ -141,7 +141,7 @@ val imageTesto = Imagenes(
                     option2Text = "Separate Wall:",
                     start = {
                         scope.launch(Dispatchers.IO) {
-                            MainFunctions().convert(
+                            convert(
                                 wallpaper = opt2Checked.value,
                                 name = opt1Checked.value,
                                 imageList,
@@ -151,7 +151,7 @@ val imageTesto = Imagenes(
                             opt2Checked.value = false
                             imageList = emptyList()
                             loading.value = true
-                            imageList = MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)
+                            imageList = getImagesList(originPath.value, wallpaper = opt2Checked.value)
                             loading.value = false
                         }
 
@@ -159,7 +159,7 @@ val imageTesto = Imagenes(
                         scope.launch(Dispatchers.IO) {
                             imageList = emptyList()
                             loading.value = true
-                            imageList = MainFunctions().getImagesList(originPath.value, wallpaper = opt2Checked.value)
+                            imageList = getImagesList(originPath.value, wallpaper = opt2Checked.value)
                             loading.value = false
 
                         }
@@ -179,7 +179,6 @@ val imageTesto = Imagenes(
                         SimpleCircularProgressLoading(isDisplayed = loading.value)
                     }
                 }
-
 
                 LazyVerticalGrid(cells = GridCells.Adaptive(minSize = 250.dp)) {
 

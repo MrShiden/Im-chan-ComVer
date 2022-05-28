@@ -200,8 +200,6 @@ fun SimpleImageCard(imagen: Imagenes, onClick: () -> Unit) {
                 println("Esto no es Linux :(")
                 d.open(File(imagePath))
             }
-
-
             onClick.invoke() }) {
             AsyncImage(
                 load = { components.loadImageBitmap(File(imagePath)) },

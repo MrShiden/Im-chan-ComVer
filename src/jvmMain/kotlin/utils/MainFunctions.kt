@@ -6,8 +6,6 @@ import kotlinx.coroutines.flow.Flow
 import java.io.File
 
 
-class MainFunctions {
-
     fun convert(wallpaper: Boolean, name: Boolean, imageList: List<Imagenes>, convertPath: String, prefijo: String) {
         if (wallpaper && !name) {
             getWallpaper(imageList, convertPath)
@@ -113,4 +111,3 @@ class MainFunctions {
 
         return imageBitmap.width
     }
-}
