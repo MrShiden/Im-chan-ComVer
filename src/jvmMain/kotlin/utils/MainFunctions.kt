@@ -7,12 +7,18 @@ import java.io.File
 
 
     fun convert(wallpaper: Boolean, name: Boolean, imageList: List<Imagenes>, convertPath: String, prefijo: String) {
-        if (wallpaper && !name) {
-            getWallpaper(imageList, convertPath)
+        try {
+            if (wallpaper && !name) {
+                getWallpaper(imageList, convertPath)
+            }
+            if (name) {
+                changeName(imageList, convertPath, prefijo)
+            }
+        }catch (e:Exception){
+            println(e)
+
         }
-        if (name) {
-            changeName(imageList, convertPath, prefijo)
-        }
+
 
     }
 
@@ -40,38 +46,49 @@ import java.io.File
         val newImagenesList = mutableListOf<Imagenes>()
 
         if (wallpaper) {
-            ubicacion.walk(FileWalkDirection.TOP_DOWN).forEach {
-                if (!it.extension.isNullOrBlank() && getImageWidth(it) > getImageHeight(it)) {
-                    val imagen = Imagenes(
-                        id = id++,
-                        nombre = it.name,
-                        imagesPath,
-                        height = getImageHeight(it),
-                        width = getImageWidth(it),
-                        extension = it.extension,
-                        file = it
-                    )
-                    newImagenesList.add(imagen)
-                }
+            try {
 
+
+                ubicacion.walk(FileWalkDirection.TOP_DOWN).forEach {
+                    if (!it.extension.isNullOrBlank() && getImageWidth(it) > getImageHeight(it)) {
+                        val imagen = Imagenes(
+                            id = id++,
+                            nombre = it.name,
+                            imagesPath,
+                            height = getImageHeight(it),
+                            width = getImageWidth(it),
+                            extension = it.extension,
+                            file = it
+                        )
+                        newImagenesList.add(imagen)
+                    }
+
+                }
+            }catch (e:java.lang.Exception){
+                println(e)
             }
 
         } else {
 
-            ubicacion.walk(FileWalkDirection.TOP_DOWN).forEach {
-                if (!it.extension.isNullOrBlank()) {
-                    val imagen = Imagenes(
-                        id = id++,
-                        nombre = it.name,
-                        imagesPath,
-                        height = getImageHeight(it),
-                        width = getImageWidth(it),
-                        extension = it.extension,
-                        file = it
-                    )
-                    newImagenesList.add(imagen)
-                }
+            try {
 
+                ubicacion.walk(FileWalkDirection.TOP_DOWN).forEach {
+                    if (!it.extension.isNullOrBlank()) {
+                        val imagen = Imagenes(
+                            id = id++,
+                            nombre = it.name,
+                            imagesPath,
+                            height = getImageHeight(it),
+                            width = getImageWidth(it),
+                            extension = it.extension,
+                            file = it
+                        )
+                        newImagenesList.add(imagen)
+                    }
+
+                }
+            }catch (e:Exception){
+                println(e)
             }
         }
 
@@ -98,6 +115,7 @@ import java.io.File
 
 
     fun getImageHeight(file: File): Int {
+
 
         val imageBitmap = loadImageBitmap(file.inputStream())
 
