@@ -14,7 +14,7 @@ Acualmente e probado Im-Chan en 2 sistemas operativos
 No e probado si funciona en equipos MacOs pero segun la [documentacion](https://github.com/JetBrains/compose-jb) de compose permite el uso de el programa sin ningun problema.
 
 ## Como instalarlo 
-Por el momento no e subido los paquetes para que puedan ejecutarlo estoy buscando en donde me conviene subirlo.
+Por el momento no e subido los paquetes para que puedan ejecutarlo estoy buscando en donde me conviene subirlo, pero puedes descargar el codigo e implementarlo por tu cuenta.
 
 ## Como funciona?
 
