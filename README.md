@@ -1,4 +1,4 @@
-# Im-chan-ComVer
+# Im-chan-ComVer (Beta Version)
 
 ![image](https://user-images.githubusercontent.com/56522484/172959389-12cceeed-6dea-4c5b-bb31-60eb2191ac07.png)
 
@@ -36,6 +36,8 @@ Por el momento no e subido los paquetes para que puedan ejecutarlo estoy buscand
 5) Una vez cargadas las imagenes y seleccionada las funciones que va a realizar el programa apretar start.
 - El programa realizara la tarea asignada.
 
+
+### Si desean descargar el codigo son libres de hacerlo, recuerden que la app se encuentra en Beta version por lo que puede ser inestable.
 
 
 
