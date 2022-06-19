@@ -17,7 +17,9 @@ import components.*
 import kotlinx.coroutines.*
 import theme.SimpleTheme
 import utils.convert
+import utils.displayTray
 import utils.getImagesList
+import java.awt.SystemTray
 import javax.swing.JFileChooser
 import javax.swing.filechooser.FileNameExtensionFilter
 
@@ -161,6 +163,12 @@ val imageTesto = Imagenes(
                             loading.value = true
                             imageList = getImagesList(originPath.value, wallpaper = opt2Checked.value)
                             loading.value = false
+
+
+
+
+
+
 
                         }
 
